@@ -75,10 +75,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
 
           Container(
+            padding: EdgeInsets.only(left: 20),
             height: 300,
             width: double.maxFinite,
             child: TabBarView(controller: _tabController, children: [
-              Text("Hi"),
+              ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: const EdgeInsets.only(top: 10, right: 15),
+                    width: 200,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image:
+                                AssetImage('assets/images/welcome-one.png'))),
+                  );
+                },
+              ),
               Text("There"),
               Text("Bye"),
             ]),
