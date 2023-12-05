@@ -2,13 +2,15 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:travel_app/misc/colors.dart';
+import 'package:travel_app/model/data_model.dart';
 import 'package:travel_app/widgets/app_buttons.dart';
 import 'package:travel_app/widgets/app_larg_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
 import 'package:travel_app/widgets/responsive_button.dart';
 
 class DetailePage extends StatefulWidget {
-  const DetailePage({super.key});
+  final DataModel place;
+  const DetailePage({super.key, required this.place});
 
   @override
   State<DetailePage> createState() => _DetailePageState();
@@ -16,6 +18,12 @@ class DetailePage extends StatefulWidget {
 
 class _DetailePageState extends State<DetailePage> {
   int selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.place.stars;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +41,19 @@ class _DetailePageState extends State<DetailePage> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/images/welcome-one.png'))),
+                          image:
+                              AssetImage('assets/images/${widget.place.img}'))),
                 )),
             Positioned(
                 left: 20,
                 top: 70,
                 child: Row(
                   children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back)),
                   ],
                 )),
             Positioned(
@@ -65,11 +78,11 @@ class _DetailePageState extends State<DetailePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppLargText(
-                              text: 'Yosemite',
+                              text: '${widget.place.name}',
                               color: Colors.black54,
                             ),
                             AppLargText(
-                              text: ' \$250',
+                              text: ' \$${widget.place.price}',
                               color: AppColors.mainTextColor,
                             ),
                           ],
@@ -88,7 +101,7 @@ class _DetailePageState extends State<DetailePage> {
                               width: 10,
                             ),
                             AppText(
-                              text: 'USA, Califorinea',
+                              text: '${widget.place.location}',
                               color: AppColors.mainTextColor,
                             )
                           ],
@@ -110,7 +123,7 @@ class _DetailePageState extends State<DetailePage> {
                               width: 10,
                             ),
                             AppText(
-                              text: '(4.0)',
+                              text: '(${widget.place.stars}.0)',
                               color: AppColors.mainTextColor,
                             )
                           ],
@@ -166,8 +179,7 @@ class _DetailePageState extends State<DetailePage> {
                           height: 10,
                         ),
                         AppText(
-                          text:
-                              'There are mable,ity have suffered alteration in some form,which don\'t look even slightly believable. If you are going to use a passagere isn\'t anything embarrassing.',
+                          text: '${widget.place.decoration}',
                           color: Colors.black54,
                         )
                       ],

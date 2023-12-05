@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_app/cubit/app_cubit.dart';
 import 'package:travel_app/misc/colors.dart';
 import 'package:travel_app/widgets/app_larg_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
@@ -17,10 +19,12 @@ class _WelcomePageState extends State<WelcomePage> {
     'welcome-two.png',
     'welcome-three.png',
   ];
+  PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView.builder(
+          controller: _pageController,
           scrollDirection: Axis.vertical,
           itemCount: images.length,
           itemBuilder: (_, index) {
@@ -29,7 +33,7 @@ class _WelcomePageState extends State<WelcomePage> {
               height: double.maxFinite,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       image: AssetImage("assets/images/${images[index]}"))),
               child: Container(
                 margin: const EdgeInsets.only(top: 150, left: 20, right: 20),
@@ -56,8 +60,27 @@ class _WelcomePageState extends State<WelcomePage> {
                         SizedBox(
                           height: 40,
                         ),
-                        ResponsiveButton(
-                          width: 120,
+                        GestureDetector(
+                          onTap: () {
+                            if (index == 2) {
+                              BlocProvider.of<AppCubits>(context).getData();
+                            } else {
+                              _pageController.nextPage(
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeIn);
+                            }
+                          },
+                          child: Container(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                ResponsiveButton(
+                                  width: 120,
+                                  isResponsive: false,
+                                ),
+                              ],
+                            ),
+                          ),
                         )
                       ],
                     ),

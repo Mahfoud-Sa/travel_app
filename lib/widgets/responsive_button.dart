@@ -19,13 +19,14 @@ class ResponsiveButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: isResponsive
               ? MainAxisAlignment.spaceAround
-              : MainAxisAlignment.spaceAround,
+              : MainAxisAlignment.center,
           children: [
-            AppText(
-              text: 'Book Trip Now',
-              color: Colors.white,
-            ),
-            const Icon(Icons.arrow_circle_down_outlined)
+            isResponsive
+                ? AppText(
+                    text: 'Book Trip Now',
+                    color: Colors.white,
+                  )
+                : const Icon(Icons.arrow_forward_ios_sharp)
             //Image.asset("assets/images/welcome-one.png"),
           ],
         ),
